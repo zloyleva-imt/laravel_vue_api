@@ -7,6 +7,7 @@
                 <div class="card">
                     <img :src="item.img_url" class="card-img-top" >
                     <div class="card-body">
+                        <div class="text-small "><b>Author:</b> <i>{{ item.user.name }}</i></div>
                         <h5 class="card-title">{{ item.title }}</h5>
                         <p class="card-text" v-html="addThreePoints(item.description)"></p>
                         <a :href="`/ads/${item.id}`" class="btn btn-primary">Read more</a>

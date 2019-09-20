@@ -84,6 +84,7 @@ class AdController extends Controller
      */
     public function destroy(Ad $ad)
     {
-        //
+        $ad->delete();
+        return response()->json(['redirect' => route('ads.index')]);
     }
 }

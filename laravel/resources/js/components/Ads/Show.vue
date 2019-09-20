@@ -9,6 +9,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ ad.title }}</h5>
                         <p class="card-text" v-html="ad.description"></p>
+                        <a href="#" class="btn btn-danger" @click.prevent="deleteAd">Delete</a>
                     </div>
                 </div>
             </div>
@@ -25,6 +26,15 @@
             ad:{
                 type: Object,
                 required: true
+            }
+        },
+        methods:{
+            deleteAd(){
+                axios({
+                    method: 'delete',
+                    url: `/ads/${this.ad.id}`
+                })
+                    .then(res => location.href = res.data.redirect)
             }
         }
     }

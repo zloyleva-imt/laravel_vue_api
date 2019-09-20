@@ -1859,6 +1859,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdsIndex",
   props: {
@@ -1905,12 +1906,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdsShow",
   props: {
     ad: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    deleteAd: function deleteAd() {
+      axios({
+        method: 'delete',
+        url: "/ads/".concat(this.ad.id)
+      }).then(function (res) {
+        return location.href = res.data.redirect;
+      });
     }
   }
 });
@@ -37227,6 +37239,12 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "text-small " }, [
+                  _c("b", [_vm._v("Author:")]),
+                  _vm._v(" "),
+                  _c("i", [_vm._v(_vm._s(item.user.name))])
+                ]),
+                _vm._v(" "),
                 _c("h5", { staticClass: "card-title" }, [
                   _vm._v(_vm._s(item.title))
                 ]),
@@ -37294,7 +37312,22 @@ var render = function() {
             _c("p", {
               staticClass: "card-text",
               domProps: { innerHTML: _vm._s(_vm.ad.description) }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.deleteAd($event)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
           ])
         ])
       ])
