@@ -8,8 +8,8 @@
                     <img :src="item.img_url" class="card-img-top" >
                     <div class="card-body">
                         <h5 class="card-title">{{ item.title }}</h5>
-                        <p class="card-text" v-html="item.description"></p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <p class="card-text" v-html="addThreePoints(item.description)"></p>
+                        <a :href="`/ads/${item.id}`" class="btn btn-primary">Read more</a>
                     </div>
                 </div>
             </div>
@@ -26,6 +26,11 @@
             ads:{
                 type: Array,
                 required: true
+            }
+        },
+        methods:{
+            addThreePoints(text){
+                return text.split(' ', 10).join(' ') + '...';
             }
         }
     }

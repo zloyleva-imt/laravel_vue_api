@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 class AdController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Ad $ad
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request, Ad $ad)
     {
         return view('ads.index', [
-            'ads' => $ad->all()
+            'ads' => $ad->with('user')->get()
         ]);
     }
 
@@ -48,7 +48,9 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        //
+        return view('ads.show', [
+            'ad' => $ad
+        ]);
     }
 
     /**
