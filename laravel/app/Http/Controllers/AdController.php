@@ -12,9 +12,11 @@ class AdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Ad $ad)
     {
-        //
+        return view('ads.index', [
+            'ads' => $ad->all()
+        ]);
     }
 
     /**
