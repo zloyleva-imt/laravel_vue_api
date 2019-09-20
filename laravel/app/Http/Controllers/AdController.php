@@ -61,7 +61,9 @@ class AdController extends Controller
      */
     public function edit(Ad $ad)
     {
-        //
+        return view('ads.edit', [
+            'ad' => $ad
+        ]);
     }
 
     /**
@@ -77,10 +79,9 @@ class AdController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Ad  $ad
-     * @return \Illuminate\Http\Response
+     * @param Ad $ad
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy(Ad $ad)
     {
