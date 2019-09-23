@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
 
             <div class="col-12">
-                <form>
+                <form @submit.prevent="submitHandler">
                     <div class="form-group">
                         <label for="title">Title</label>
                         <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title"
@@ -36,6 +36,10 @@
             ad:{
                 type: Object,
                 required: true
+            },
+            routes:{
+                type: Object,
+                required: true
             }
         },
         data(){
@@ -47,9 +51,22 @@
                 }
             }
         },
+        created(){
+            this.updatedAd = {...this.ad};
+        },
         methods:{
             changeInputHandler(e){
                 this.updatedAd[e.target.name] = e.target.value
+            },
+            submitHandler(){
+                axios({
+                    url: `${this.routes.ads}/${this.ad.id}`,
+                    method: 'put',
+                    data:this.updatedAd,
+                })
+                    .then(res => {
+                        location.href = res.data.redirect;
+                    })
             }
         }
     }

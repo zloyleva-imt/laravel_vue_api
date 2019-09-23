@@ -1838,6 +1838,12 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1875,6 +1881,10 @@ __webpack_require__.r(__webpack_exports__);
     ad: {
       type: Object,
       required: true
+    },
+    routes: {
+      type: Object,
+      required: true
     }
   },
   data: function data() {
@@ -1886,9 +1896,21 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  created: function created() {
+    this.updatedAd = _objectSpread({}, this.ad);
+  },
   methods: {
     changeInputHandler: function changeInputHandler(e) {
       this.updatedAd[e.target.name] = e.target.value;
+    },
+    submitHandler: function submitHandler() {
+      axios({
+        url: "".concat(this.routes.ads, "/").concat(this.ad.id),
+        method: 'put',
+        data: this.updatedAd
+      }).then(function (res) {
+        location.href = res.data.redirect;
+      });
     }
   }
 });
@@ -37292,60 +37314,71 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-12" }, [
-        _c("form", [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "title",
-                "aria-describedby": "emailHelp",
-                name: "title",
-                placeholder: "Enter title"
-              },
-              domProps: { value: _vm.ad.title },
-              on: { input: _vm.changeInputHandler }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "Description" } }, [
-              _vm._v("Description")
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submitHandler($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "title",
+                  "aria-describedby": "emailHelp",
+                  name: "title",
+                  placeholder: "Enter title"
+                },
+                domProps: { value: _vm.ad.title },
+                on: { input: _vm.changeInputHandler }
+              })
             ]),
             _vm._v(" "),
-            _c("textarea", {
-              staticClass: "form-control",
-              attrs: { id: "Description", rows: "3", name: "description" },
-              domProps: { value: _vm.ad.description },
-              on: { input: _vm.changeInputHandler }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "Image" } }, [_vm._v("Image URL")]),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "Description" } }, [
+                _vm._v("Description")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                staticClass: "form-control",
+                attrs: { id: "Description", rows: "3", name: "description" },
+                domProps: { value: _vm.ad.description },
+                on: { input: _vm.changeInputHandler }
+              })
+            ]),
             _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "Image",
-                "aria-describedby": "emailHelp",
-                name: "img_url",
-                placeholder: "Enter Image URL"
-              },
-              domProps: { value: _vm.ad.img_url },
-              on: { input: _vm.changeInputHandler }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("Update")]
-          )
-        ])
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "Image" } }, [_vm._v("Image URL")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "Image",
+                  "aria-describedby": "emailHelp",
+                  name: "img_url",
+                  placeholder: "Enter Image URL"
+                },
+                domProps: { value: _vm.ad.img_url },
+                on: { input: _vm.changeInputHandler }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Update")]
+            )
+          ]
+        )
       ])
     ])
   ])

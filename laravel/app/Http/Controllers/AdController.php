@@ -75,7 +75,8 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
-        //
+        $ad->update($request->only(['title', 'description', 'img_url']));
+        return response()->json(['redirect' => route('ads.index')]);
     }
 
     /**

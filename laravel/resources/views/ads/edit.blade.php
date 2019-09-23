@@ -4,6 +4,7 @@
 
     <ads_edit-component
         :ad="{{ $ad }}"
+        :routes="{{ collect($routes) }}"
     ></ads_edit-component>
 
 @endsection
