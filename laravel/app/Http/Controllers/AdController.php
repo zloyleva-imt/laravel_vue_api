@@ -15,7 +15,7 @@ class AdController extends Controller
     public function index(Request $request, Ad $ad)
     {
         return view('ads.index', [
-            'ads' => $ad->with('user')->get()
+            'ads' => $ad->with('user')->orderByDesc('created_at')->get()
         ]);
     }
 
@@ -26,7 +26,7 @@ class AdController extends Controller
      */
     public function create()
     {
-        //
+        return view('ads.create');
     }
 
     /**
@@ -35,9 +35,11 @@ class AdController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Ad $ad)
     {
-        //
+        $collection = collect($request->only(['title', 'description', 'img_url']));
+        $ad->create($collection->merge(['user_id' => auth()->user()->id])->toArray());
+        return response()->json(['redirect' => route('ads.index')]);
     }
 
     /**

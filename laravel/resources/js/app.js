@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('ads_index-component', require('./components/Ads/Index').default);
 Vue.component('ads_show-component', require('./components/Ads/Show').default);
 Vue.component('ads_edit-component', require('./components/Ads/Edit').default);
+Vue.component('ads_create-component', require('./components/Ads/Create').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
